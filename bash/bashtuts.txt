@@ -1,0 +1,213 @@
+make executable
+chmod +x <file name>
+
+/<filenmae.sh> to execute bash file 
+
+2. Redirect to file 
+Capture output and send it to file 
+> for replacing all content in the file. 
+>> for appending content to file.
+
+3. Comments are preceeded with #
+: '
+This is a multiline command
+'
+
+4. heredocdelimeter
+cat << <variable>
+# add all ur text here
+<variable> to end input
+values can be out put to terminal
+
+5. condition statements 
+count=10
+if [$count -eq 10]
+then
+    echo "the condition is true"
+else
+    echo "the condition is false"
+fi
+-ne = not equal
+-eq = equal
+-gt = greater than
+-lt = lesser than
+-le = less or equal
+(( $count < 9))
+
+(( $count < 9))
+
+
+if [$count -eq 10]
+then
+    echo "the condition is true"
+elif(($count <= 9))
+then
+    echo "the condition is false"
+else
+    echo "the condition is false"
+fi
+
+6. And operators
+&&
+[["$count" -eq 10 && "$count" -eq 10]]
+
+OR operator
+-o 
+[["$count" -eq 10 -o "$count" -eq 10]]
+[["$count" -eq 10 || "$count" -eq 10]]
+
+
+7. Loops
+number = 1
+while [condition]
+do
+    <all the statements
+    echo "$number"
+    number=$((number+1)) => to increment number
+    >
+done
+
+until [condition]
+do
+    <all the statements
+    echo "$number"
+    number=$((number+1)) => to increment number
+    >
+done
+
+FORLOOP
+for i in 1 2 3 4 5
+do
+    echo $i
+done
+
+for {0..20..2} #{start.. ending..increment}
+do
+    echo $i
+done
+
+for ((i=0; i<5; i++))
+do  if [$i -gt 5]
+    then
+        break // continue can be used the same way
+    fi
+    echo $i
+done
+
+8. String Input
+args=("$@")
+
+echo ${args[0]}, ${args[1]}
+
+echo $@ #for unlimitted inputs
+
+while read line
+do
+    echo "$line"
+done < "${1:-/dev/stdin}" #/dev/stdin is the path of the stdin
+
+ls -al > file1.txt 2>&1 #add both standard input and error to the same file
+
+9. PIPE
+send data from one comand to the next
+
+Checking strings 
+echo "enter 1st string"
+read str1
+echo "enter 2nd string"
+read str2
+
+if [ $str1 == $str2]
+
+you can use \< to check if str1 is smaller str2
+you can use \> to check if str1 is greater str2
+...
+
+concatenation of strings
+c=$str1$str2
+echo ${str1^} => Lower case
+echo ${str1^^} => upper case
+
+Numbers and Arithmetic
+n1 = 4, n2 = 20
+echo $(( n1 +n2 )) => add space before n1 and after n2
+echo $(expr $n1 + $n2)       
+echo $(expr $n1 \* $n2)       
+
+10. Arrays.
+car = ('BMW', 'Toyota', 'Honda')
+echo "${car[@]}"
+echo "${!car[@]}" print indices
+echo "${#car[@]}" print length
+unset car[2] remove value from array by index
+car[2] = "mercedes"  Add value to Array
+
+
+11. Functions 
+function funcName()
+{
+    echo "this is new function"
+}
+
+funcName    =>       calling function(no parenthesis needed)
+
+function funcPrint()
+{
+    echo $1 $2 $3
+}
+funcPrint Hi This is linuxhint
+
+Check  if function is working.
+function funcCheck()
+{
+    returningValue = "Using function right now"
+    echo "$returningValue"
+}
+
+funcCheck
+
+
+12 Files and Directories.
+create directory
+
+mkdir -p <directoryName> => "-p is added to avoid errors!"
+
+echo "Enter directory name to check"
+read direct
+
+if[-d "$direct"]
+then 
+    echo "$directory exists"
+else
+    echo "directory doesn't exist"
+fi
+
+echo "Enter file name to check"
+read filename
+
+if[[-f "$filename"]]
+then 
+    echo "$filename exists"
+else
+    echo "filename doesn't exist"
+fi
+
+
+Read file line by line 
+echo "Enter filename from which you want to read."
+read filename
+
+if [[-f "$filename"]]
+then 
+    while IFS= read -r line
+    do
+        echo "$line"
+    done < $filename
+else
+    echo "filename doesn't exist"
+fi
+rm filename => deletes file
+
+
+13. Sending An email via script.
+install ssmtp
